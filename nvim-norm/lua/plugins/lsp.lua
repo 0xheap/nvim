@@ -56,6 +56,11 @@ return {
 						completeUnimported = true,
 						clangdFileStatus = true,
 					},
+					on_attach = function(client, bufnr)
+						-- Disable LSP formatting to prevent automatic brace movement
+						client.server_capabilities.documentFormattingProvider = false
+						client.server_capabilities.documentRangeFormattingProvider = false
+					end,
 				},
 			},
 			setup = {},
