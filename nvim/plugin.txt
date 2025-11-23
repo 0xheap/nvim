@@ -1,0 +1,102 @@
+NEOVIM PLUGINS LIST
+====================
+
+CORE/FRAMEWORK
+--------------
+LazyVim                         - Base configuration framework
+lazy.nvim                       - Plugin manager
+plenary.nvim                    - Lua utility library (dependency for many plugins)
+
+LSP & COMPLETION
+----------------
+nvim-lspconfig                  - LSP configuration (clangd for C)
+mason.nvim                      - LSP/tool installer
+mason-lspconfig.nvim            - Bridge between mason and lspconfig
+blink.cmp                       - Autocompletion engine
+friendly-snippets               - Code snippets collection
+lazydev.nvim                    - Lua development support
+clangd_extensions.nvim          - Enhanced clangd features (inlay hints, AST)
+
+TREESITTER (SYNTAX)
+-------------------
+nvim-treesitter                 - Better syntax highlighting
+nvim-treesitter-textobjects     - Text objects based on syntax
+nvim-treesitter-context         - Shows current function at top
+playground                      - Treesitter playground/debugger
+nvim-ts-autotag                 - Auto close HTML/JSX tags
+ts-comments.nvim                - Smart commenting
+
+CODING TOOLS
+------------
+inc-rename.nvim                 - Incremental LSP rename
+mini.bracketed                  - Navigate with [ and ]
+dial.nvim                       - Enhanced increment/decrement (Ctrl+a/Ctrl+x)
+norminette42.nvim               - 42 School norminette linter
+conform.nvim                    - Code formatter (clang-format)
+nvim-lint                       - Linting engine
+mini.ai                         - Better text objects (around/inside)
+mini.pairs                      - Auto pair brackets
+
+DEBUGGING
+---------
+nvim-dap                        - Debug Adapter Protocol (GDB)
+nvim-dap-ui                     - Debug UI
+nvim-nio                        - Async I/O (dependency for dap-ui)
+
+FILE NAVIGATION
+---------------
+telescope.nvim                  - Fuzzy finder
+telescope-fzf-native.nvim       - Faster telescope sorting
+telescope-file-browser.nvim     - File browser in telescope
+nvim-tree.lua                   - File explorer sidebar (Ctrl+n)
+nvim-web-devicons               - File icons
+
+UI/APPEARANCE
+-------------
+noice.nvim                      - Better UI for messages/cmdline
+nui.nvim                        - UI component library (dependency)
+bufferline.nvim                 - Tab/buffer line at top
+lualine.nvim                    - Status line at bottom
+incline.nvim                    - Floating filename at top
+barbecue                        - Breadcrumbs (file path/symbols)
+nvim-navic                      - Code context (dependency for barbecue)
+mini.icons                      - Icon provider
+snacks.nvim                     - Dashboard + utilities
+zen-mode.nvim                   - Distraction-free mode (Space+z)
+dressing.nvim                   - Better vim.ui interfaces
+
+THEMES (12 TOTAL)
+-----------------
+solarized-osaka.nvim            - Solarized Osaka theme
+adwaita.nvim                    - Adwaita theme
+melange-nvim                    - Melange theme
+gruvbox.nvim                    - Gruvbox theme
+solarized.nvim                  - Solarized theme
+naysayer.nvim                   - Naysayer theme
+srcery-vim                      - Srcery theme
+Abstract-cs                     - Abstract theme
+base16-nvim                     - Base16 theme
+oscura.nvim                     - Oscura theme
+vim-irblack                     - IR Black theme
+satellite                       - Satellite theme
+themery.nvim                    - Theme switcher (Space+tt)
+
+GIT
+---
+gitsigns.nvim                   - Git signs in gutter
+git.nvim                        - Git blame/browse (Space+gb, Space+go)
+
+UTILITIES
+---------
+nvim-highlight-colors           - Highlight color codes
+close-buffers.nvim              - Close hidden/nameless buffers
+toggleterm.nvim                 - Terminal toggle (Ctrl+u)
+which-key.nvim                  - Keybinding popup helper
+trouble.nvim                    - Diagnostics list
+todo-comments.nvim              - Highlight TODO/FIXME comments
+persistence.nvim                - Session management
+grug-far.nvim                   - Search and replace
+
+TOTAL: 63 plugins
+
+
