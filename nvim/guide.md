@@ -206,6 +206,22 @@ Select code based on syntax structure:
   - `NOTE:` - Hint
   - `PERF:` - Performance
 
+### Mini Plugins
+
+#### Auto Pairs (mini.pairs)
+- Automatically pairs brackets, quotes, and parentheses
+- Works in insert mode as you type
+
+#### Move Lines/Selections (mini.move)
+- **Move lines/selections:** `Ctrl+h/j/k/l`
+- Works in both normal and visual mode
+- Move selections in any direction
+
+#### Split/Join Arguments (mini.splitjoin)
+- **Toggle split/join:** `gS`
+- Splits function arguments to multiple lines or joins them to one line
+- Works with arrays, objects, and function parameters
+
 ### Diagnostics List (trouble.nvim)
 - **All diagnostics:** `<leader>xx` (Space + xx) - Show all diagnostics
 - **Buffer diagnostics:** `<leader>xd` (Space + xd) - Show diagnostics for current file
@@ -288,6 +304,8 @@ Select code based on syntax structure:
 | `<leader>rn` | Rename symbol |
 | `af/if` | Select function (outer/inner) |
 | `ac/ic` | Select class (outer/inner) |
+| `Ctrl+h/j/k/l` | Move lines/selections |
+| `gS` | Split/join arguments |
 
 ---
 
@@ -423,6 +441,9 @@ vim.opt.shiftwidth = 2   -- Keep same as tabstop
 - **plenary.nvim** - Lua utility functions
 - **trouble.nvim** - Diagnostics list
 - **persistence.nvim** - Session management
+- **mini.pairs** - Auto pair brackets
+- **mini.move** - Move lines and selections
+- **mini.splitjoin** - Split and join arguments
 
 ---
 
