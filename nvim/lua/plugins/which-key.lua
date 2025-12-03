@@ -4,5 +4,9 @@ return {
   keys = {
     { "<leader>k", "<cmd>WhichKey<cr>", desc = "Show keybindings" },
   },
-  opts = {},
+  opts = {
+    triggers = {
+      { "<auto>", mode = "nxso" },
+    },
+  },
 }
