@@ -111,6 +111,31 @@ require("lazy").setup({
     end
   },
   {
+    "goolord/alpha-nvim",
+    config = function()
+      local alpha = require("alpha")
+      local dashboard = require("alpha.themes.dashboard")
+      
+      dashboard.section.header.val = {
+        "                                                     ",
+        "                                                     ",
+        "                                                     ",
+        "          // Working close to the memory           ",
+        "                                                     ",
+        "                                                     ",
+        "                                                     ",
+      }
+      
+      dashboard.section.buttons.val = {}
+      dashboard.section.footer.val = ""
+      
+      dashboard.config.opts.noautocmd = true
+      dashboard.opts.layout[1].val = 8
+      
+      alpha.setup(dashboard.config)
+    end
+  },
+  {
     "neovim/nvim-lspconfig",
     config = function()
       vim.lsp.config.pyright = {
