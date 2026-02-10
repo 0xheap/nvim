@@ -34,6 +34,7 @@ require("lazy").setup({
   {
     "nvim-tree/nvim-tree.lua",
     config = function()
+      local api = require("nvim-tree.api")
       require("nvim-tree").setup({
         renderer = {
           icons = {
@@ -54,6 +55,25 @@ require("lazy").setup({
           width = 30,
           signcolumn = "no",
         },
+        actions = {
+          open_file = {
+            quit_on_open = false,
+          },
+        },
+        on_attach = function(bufnr)
+          local api = require("nvim-tree.api")
+          
+          -- Default mappings
+          api.config.mappings.default_on_attach(bufnr)
+          
+          -- Custom mappings
+          local function opts(desc)
+            return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+          end
+          vim.keymap.set('n', '<C-]>', api.tree.change_root_to_node, opts('CD'))
+          vim.keymap.set('n', '<C-u>', api.tree.change_root_to_parent, opts('Up'))
+          vim.keymap.set('n', '<C-[>', api.tree.change_root_to_parent, opts('Up'))
+        end,
       })
       vim.opt.fillchars:append({ vert = ' ' })
       vim.keymap.set('n', '<C-n>', ':NvimTreeToggle<CR>', { silent = true })
@@ -270,3 +290,5 @@ require("lazy").setup({
 -- Basic settings
 vim.opt.number = true
 vim.opt.termguicolors = true
+vim.opt.fillchars = { eob = " " }
+vim.opt.mouse = "a"
