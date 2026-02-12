@@ -19,6 +19,11 @@ require("lazy").setup({
         terminal = true,
       })
       vim.cmd('colorscheme ayu-dark')
+      -- Apply completion styling after colorscheme
+      vim.cmd([[
+        highlight CmpItemAbbrMatch guifg=#FFFFFF gui=NONE
+        highlight CmpItemAbbrMatchFuzzy guifg=#FFFFFF gui=NONE
+      ]])
     end
   },
   {
@@ -230,20 +235,19 @@ require("lazy").setup({
       
       -- Style LSP popups
       vim.cmd([[
-        highlight FloatBorder guifg=#80a0ff guibg=#1a1a1a
-        highlight NormalFloat guibg=#1a1a1a guifg=#c6c6c6
-        highlight FloatTitle guifg=#79dac8 guibg=#1a1a1a gui=bold
+        highlight LspBorder guifg=#FFFFFF guibg=NONE
+        highlight LspNormal guibg=NONE
       ]])
       
       local border = {
-        {"╭", "FloatBorder"},
-        {"─", "FloatBorder"},
-        {"╮", "FloatBorder"},
-        {"│", "FloatBorder"},
-        {"╯", "FloatBorder"},
-        {"─", "FloatBorder"},
-        {"╰", "FloatBorder"},
-        {"│", "FloatBorder"},
+        {"╭", "LspBorder"},
+        {"─", "LspBorder"},
+        {"╮", "LspBorder"},
+        {"│", "LspBorder"},
+        {"╯", "LspBorder"},
+        {"─", "LspBorder"},
+        {"╰", "LspBorder"},
+        {"│", "LspBorder"},
       }
       
       vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
@@ -270,14 +274,23 @@ require("lazy").setup({
     },
     config = function()
       local cmp = require('cmp')
+      
+      vim.cmd([[
+        highlight CmpBorder guifg=#FFFFFF guibg=NONE
+        highlight CmpNormal guibg=NONE
+      ]])
+      
       cmp.setup({
         window = {
           completion = cmp.config.window.bordered({
             border = 'rounded',
-            winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
+            winhighlight = 'FloatBorder:CmpBorder,Normal:CmpNormal',
+            max_height = 15,
+            scrollbar = true,
           }),
           documentation = cmp.config.window.bordered({
             border = 'rounded',
+            winhighlight = 'FloatBorder:CmpBorder,Normal:CmpNormal',
           }),
         },
         mapping = cmp.mapping.preset.insert({
@@ -290,14 +303,6 @@ require("lazy").setup({
           { name = 'buffer' },
         },
       })
-      
-      -- Style the completion menu
-      vim.cmd([[
-        highlight CmpItemAbbrMatch guifg=#569CD6 gui=bold
-        highlight CmpItemAbbrMatchFuzzy guifg=#569CD6 gui=bold
-        highlight CmpItemKind guifg=#D4D4D4
-        highlight CmpItemMenu guifg=#808080
-      ]])
     end
   },
   {
@@ -326,10 +331,9 @@ require("lazy").setup({
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     config = function()
-      require("nvim-treesitter.configs").setup({
-        ensure_installed = { "python", "lua", "c", "cpp", "javascript", "typescript" },
+      require("nvim-treesitter").setup({
+        ensure_install = { "python", "lua", "c", "cpp", "javascript", "typescript" },
         highlight = { enable = true },
-        indent = { enable = true },
       })
     end
   },
@@ -360,8 +364,20 @@ vim.opt.mouse = "a"
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function()
     vim.cmd([[
-      highlight FloatBorder guifg=#80a0ff guibg=#1a1a1a
-      highlight NormalFloat guibg=#1a1a1a guifg=#c6c6c6
+      highlight LspBorder guifg=#FFFFFF guibg=NONE
+      highlight LspNormal guibg=NONE
+    ]])
+  end,
+})
+
+-- Force completion menu styling after colorscheme
+vim.api.nvim_create_autocmd("ColorScheme", {
+  callback = function()
+    vim.cmd([[
+      highlight CmpItemAbbrMatch guifg=#FFFFFF
+      highlight CmpItemAbbrMatchFuzzy guifg=#FFFFFF
+      highlight CmpItemKind guifg=#D4D4D4
+      highlight CmpItemMenu guifg=#808080
     ]])
   end,
 })
