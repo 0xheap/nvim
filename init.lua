@@ -170,11 +170,8 @@ require("lazy").setup({
           backend = "nui",
         },
         lsp = {
-          override = {
-            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-            ["vim.lsp.util.stylize_markdown"] = true,
-            ["cmp.entry.get_documentation"] = true,
-          },
+          hover = { enabled = false },
+          signature = { enabled = false },
         },
         presets = {
           bottom_search = false,
@@ -231,13 +228,36 @@ require("lazy").setup({
       vim.keymap.set('n', 'K', vim.lsp.buf.hover, { silent = true })
       vim.keymap.set('n', '<C-k>', vim.lsp.buf.hover, { silent = true })
       
-      -- Style hover popup with grey border
-      vim.cmd([[highlight FloatBorder guifg=#808080 guibg=NONE]])
+      -- Style LSP popups
+      vim.cmd([[
+        highlight FloatBorder guifg=#80a0ff guibg=#1a1a1a
+        highlight NormalFloat guibg=#1a1a1a guifg=#c6c6c6
+        highlight FloatTitle guifg=#79dac8 guibg=#1a1a1a gui=bold
+      ]])
+      
+      local border = {
+        {"╭", "FloatBorder"},
+        {"─", "FloatBorder"},
+        {"╮", "FloatBorder"},
+        {"│", "FloatBorder"},
+        {"╯", "FloatBorder"},
+        {"─", "FloatBorder"},
+        {"╰", "FloatBorder"},
+        {"│", "FloatBorder"},
+      }
+      
       vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
         vim.lsp.handlers.hover, {
-          border = "rounded",
-          max_width = 80,
-          max_height = 20,
+          border = border,
+          max_width = 100,
+          max_height = 30,
+        }
+      )
+      
+      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+        vim.lsp.handlers.signature_help, {
+          border = border,
+          max_width = 100,
         }
       )
     end
@@ -251,6 +271,15 @@ require("lazy").setup({
     config = function()
       local cmp = require('cmp')
       cmp.setup({
+        window = {
+          completion = cmp.config.window.bordered({
+            border = 'rounded',
+            winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
+          }),
+          documentation = cmp.config.window.bordered({
+            border = 'rounded',
+          }),
+        },
         mapping = cmp.mapping.preset.insert({
           ['<CR>'] = cmp.mapping.confirm({ select = true }),
           ['<Tab>'] = cmp.mapping.select_next_item(),
@@ -261,6 +290,14 @@ require("lazy").setup({
           { name = 'buffer' },
         },
       })
+      
+      -- Style the completion menu
+      vim.cmd([[
+        highlight CmpItemAbbrMatch guifg=#569CD6 gui=bold
+        highlight CmpItemAbbrMatchFuzzy guifg=#569CD6 gui=bold
+        highlight CmpItemKind guifg=#D4D4D4
+        highlight CmpItemMenu guifg=#808080
+      ]])
     end
   },
   {
@@ -284,6 +321,32 @@ require("lazy").setup({
         scope = { enabled = true },
       })
     end
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    config = function()
+      require("nvim-treesitter.configs").setup({
+        ensure_installed = { "python", "lua", "c", "cpp", "javascript", "typescript" },
+        highlight = { enable = true },
+        indent = { enable = true },
+      })
+    end
+  },
+  {
+    "numToStr/Comment.nvim",
+    config = function()
+      require("Comment").setup()
+    end
+  },
+  {
+    "windwp/nvim-autopairs",
+    config = function()
+      require("nvim-autopairs").setup()
+      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+      local cmp = require("cmp")
+      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+    end
   }
 })
 
@@ -292,3 +355,13 @@ vim.opt.number = true
 vim.opt.termguicolors = true
 vim.opt.fillchars = { eob = " " }
 vim.opt.mouse = "a"
+
+-- LSP popup styling (must be after plugins)
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function()
+    vim.cmd([[
+      highlight FloatBorder guifg=#80a0ff guibg=#1a1a1a
+      highlight NormalFloat guibg=#1a1a1a guifg=#c6c6c6
+    ]])
+  end,
+})
